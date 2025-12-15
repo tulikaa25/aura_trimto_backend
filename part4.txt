@@ -1,0 +1,14 @@
+Real world scenario questions 
+1. If the frontend is ready but the backend is not yet implemented, how would you continue 
+working? 
+
+To continue working on the frontend, I would implement mock API calls using local JSON data or a library like Mock Service Worker (MSW). This allows the UI to interact with simulated responses (e.g., fetching a list of users or receiving a success message after form submission) without needing a live server. 
+
+2. If an API is not responding, what are the first things you would check? 
+The first checks focus on the connection chain:
+•	Network Status: Verify the API server (and its tunnel/proxy, like Ngrok, if used) is running and accessible. Check firewall/security settings for blocks.
+•	Immediately examine the server's terminal/logs for uncaught exceptions, crashes, which indicate the API process died before responding.
+•	Endpoint/Method: Use a tool like Postman to confirm the URL and HTTP method (GET, POST, etc.) are correct and working independently of the frontend application.
+
+3. How would you secure sensitive data such as database credentials and API keys in a real project?
+Sensitive data should never be hardcoded directly into the codebase. Instead, I would use environment variables (e.g., .env files) for local development, and for production, utilize a secret management service like AWS Secrets Manager. Only the keys needed to access these secret services would be stored in the deployment configuration, ensuring the sensitive values are external to the source code repository.
