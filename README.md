@@ -3,7 +3,7 @@
 
 ---
 
-## Repository 1 `backend-node`
+## `backend-node`
 
 This repository contains the Node.js/Express server and Mongoose models, providing a REST API for User CRUD operations.
 
@@ -53,7 +53,7 @@ http://localhost:5000/api
 | DELETE | `/api/users/:id` | Delete a user by ID     | —                                          |
 
 
-## Repository 2: frontend-react-native
+## `frontend-react-native`
 
 This repository contains the mobile application built using React Native and Expo, which consumes the backend REST API.
 
