@@ -1,0 +1,43 @@
+Part 3: Backend → Frontend Connection (Explanation) 
+The Role of Ngrok
+The Express server runs on a private local address (e.g., http://localhost:5000).
+
+The mobile app, running on a separate device, cannot access this private address.
+
+Ngrok creates a secure, public HTTPS tunnel (e.g., https://abcd1234.ngrok-free.dev) that forwards all incoming traffic directly to the private local port.
+
+
+The Connection Point (BASE_URL)
+The frontend uses the BASE_URL variable (src/config.js) to store the current Ngrok URL plus the Express API prefix (/api).
+
+When the app calls fetch(\${BASE_URL}/users`)`, the request leaves the mobile device, travels over the public internet to the Ngrok server, and is then delivered locally to the running Express server.
+
+This dynamic BASE_URL is the sole link between the two independent repositories during local development.
+
+
+
+Success Flow (Status 200/201)
+Response Check: The fetch promise resolves, and the status is checked using if (response.ok) (which is true for statuses 200-299).
+
+Data Extraction: The body is safely parsed using const data = await response.json();.
+
+UI Update: The UI is updated for success (e.g., Alert.alert('Success')).
+
+State Reset/Navigation: Local form state is cleared (setName('')), and the user is navigated to the next screen (navigation.navigate('UserList')).
+
+
+Error Flow (Status $\ge$ 400)Status Check: The status check if (!response.ok) fails (true for statuses $\ge$ 400).
+
+Error Extraction: The response body is parsed (const data = await response.json();) to extract the server-provided error message (data.message).
+
+Display Error: The error is presented clearly to the user via an Alert (Alert.alert('Error', data.message || 'Failed to process request.')).
+
+State Management: The loading indicator is dismissed (setLoading(false)).
+
+
+Handling API Request Failures:
+When a request cannot be fulfilled, the application differentiates between a server-side error (handled above) and a network failure:
+
+The application displays a Network Error alert (Alert.alert('Network Error', 'Could not connect to the backend server.')).  
+
+Server Response Error	The server returns a status of 400, 404, or 500.
